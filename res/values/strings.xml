@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MultiDisplayDemo</string>
+    <string name="a1_name">Primary Display</string>
+    <string name="a2_name">Second Display</string>
+    <string name="btnStartActivity">  Start Activity  </string>
+    <string name="btnStartPresentation">Start Presentation</string>
+    <string name="btnSameDisplay">多屏同显</string>
+    <string name="btnDifferentDisplay">多屏异显</string>
+</resources>

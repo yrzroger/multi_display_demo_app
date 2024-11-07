@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/a1_name"
+        android:textDirection="locale" />
+        
+	<Button android:id="@+id/btnStartActivity"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:text="@string/btnStartActivity"
+		android:textColor="#FF0000" />
+
+	<Button android:id="@+id/btnStartPresentation"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:text="@string/btnStartPresentation"
+		android:textColor="#FF0000" />
+	<Button android:id="@+id/btnSameDisplay"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:text="@string/btnSameDisplay"
+		android:textColor="#FF0000" />
+
+	<Button android:id="@+id/btnDifferentDisplay"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+        android:layout_gravity="center"
+		android:text="@string/btnDifferentDisplay"
+		android:textColor="#FF0000" />
+
+
+</LinearLayout>

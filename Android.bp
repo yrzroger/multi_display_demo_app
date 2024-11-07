@@ -1,0 +1,14 @@
+
+android_app {
+    name: "MultiDisplayDemo",
+    manifest: "AndroidManifest.xml", 
+    srcs: ["src/**/*.java"],
+    resource_dirs: ["res"],
+    platform_apis: true,
+    certificate: "platform",
+    system_ext_specific: true,
+    //privileged: true,
+    
+    static_libs: ["services"],
+    
+}

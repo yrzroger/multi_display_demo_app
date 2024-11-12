@@ -21,7 +21,7 @@ import android.widget.Toast;
 // add for setDisplayLayerStack
 import android.os.IBinder;
 import android.view.SurfaceControl;
-import com.android.server.display.DisplayControl;
+//import com.android.server.display.DisplayControl;
 
 /**
  * 多屏幕时，如何将内容显示到指定的Display，提供两种方式
@@ -60,6 +60,8 @@ public class MainActivity extends Activity implements OnClickListener {
         btnSameDisplay.setOnClickListener(this);
         btnDifferentDisplay = (Button) findViewById(R.id.btnDifferentDisplay);
         btnDifferentDisplay.setOnClickListener(this);
+        
+        hideNavigationBarStatusBar();
     }
 
     @Override
@@ -102,14 +104,29 @@ public class MainActivity extends Activity implements OnClickListener {
                 showPresentation();
                 break;
             case R.id.btnSameDisplay:
-                showSameDisplay();
+                //showSameDisplay();
                 break;
             case R.id.btnDifferentDisplay:
-                showDifferentDisplay();
+                //showDifferentDisplay();
                 break;
             default:
                 Log.d(TAG, "do nothing ...");
         }
+    }
+
+ /**
+     * 导航栏，状态栏隐藏
+     * @param activity
+     */
+    public void hideNavigationBarStatusBar(){
+        View decorView = getWindow().getDecorView();
+        decorView.setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
     }
 
     public void showSecondActivity() {
@@ -120,7 +137,7 @@ public class MainActivity extends Activity implements OnClickListener {
             Log.d(TAG, display.toString());
 
         if (displays.length < 2) {
-            Log.e("TAG", "no secondary display");
+            Log.e(TAG, "no secondary display");
             Toast.makeText(this, "no secondary display, do nothing  !!!", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -155,13 +172,13 @@ public class MainActivity extends Activity implements OnClickListener {
         Display[] displays = displayManager.getDisplays(DisplayManager.DISPLAY_CATEGORY_PRESENTATION);
 
         if (displays.length < 1) {
-            Log.e("TAG", "no Presentation display");
+            Log.e(TAG, "no Presentation display");
             return;
         }
 
         //判断是否有多个屏，只有Display.FLAG_PRESENTATION的Display才可以显示Presentation
         // 否则错误--Attempted to add presentation window to a non-suitable display
-        Display display = displays[1];
+        Display display = displays[0];
         if (mPresentation == null) {
             mPresentation = new MyPresentation(this, display);
             try {
@@ -172,65 +189,65 @@ public class MainActivity extends Activity implements OnClickListener {
         }
     }
     
-    public void showSameDisplay() {
-        DisplayManager displayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
-        Display[] displays = displayManager.getDisplays();
-        // print display info to debug
-        for(Display display : displays)
-            Log.d(TAG, display.toString());
-
-        if (displays.length < 2) {
-            Log.e("TAG", "no secondary display");
-            Toast.makeText(this, "no secondary display, do nothing  !!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
-        long[] ids = DisplayControl.getPhysicalDisplayIds();
-        for(long id : ids) {
-            Log.d(TAG, "id = " + id);
-        
-            final IBinder displayToken = DisplayControl.getPhysicalDisplayToken(id);
-            if (displayToken == null) {
-                Log.e(TAG, "Display token is null.");
-                continue;
-            }
-            
-            SurfaceControl.Transaction t = new SurfaceControl.Transaction();
-            t.setDisplayLayerStack(displayToken, 0);
-            t.apply();
-            Log.e("TAG", "setDisplayLayerStack 0");
-        }
-    }
-
-    public void showDifferentDisplay() {
-        DisplayManager displayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
-        Display[] displays = displayManager.getDisplays();
-        // print display info to debug
-        for(Display display : displays)
-            Log.d(TAG, display.toString());
-
-        if (displays.length < 2) {
-            Log.e("TAG", "no secondary display");
-            Toast.makeText(this, "no secondary display, do nothing  !!!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        
-        int layerStack = 0;
-        long[] ids = DisplayControl.getPhysicalDisplayIds();
-        for(long id : ids) {
-            Log.d(TAG, "id = " + id);
-        
-            final IBinder displayToken = DisplayControl.getPhysicalDisplayToken(id);
-            if (displayToken == null) {
-                Log.e(TAG, "Display token is null.");
-                continue;
-            }
-            
-            SurfaceControl.Transaction t = new SurfaceControl.Transaction();
-            t.setDisplayLayerStack(displayToken, layerStack++);
-            t.apply();
-            Log.e("TAG", "setDisplayLayerStack 1");
-        }
-    }
+//    public void showSameDisplay() {
+//        DisplayManager displayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
+//        Display[] displays = displayManager.getDisplays();
+//        // print display info to debug
+//        for(Display display : displays)
+//            Log.d(TAG, display.toString());
+//
+//        if (displays.length < 2) {
+//            Log.e(TAG, "no secondary display");
+//            Toast.makeText(this, "no secondary display, do nothing  !!!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        
+//        long[] ids = DisplayControl.getPhysicalDisplayIds();
+//        for(long id : ids) {
+//            Log.d(TAG, "id = " + id);
+//        
+//            final IBinder displayToken = DisplayControl.getPhysicalDisplayToken(id);
+//            if (displayToken == null) {
+//                Log.e(TAG, "Display token is null.");
+//                continue;
+//            }
+//            
+//            SurfaceControl.Transaction t = new SurfaceControl.Transaction();
+//            t.setDisplayLayerStack(displayToken, 0);
+//            t.apply();
+//            Log.e(TAG, "setDisplayLayerStack 0");
+//        }
+//    }
+//
+//    public void showDifferentDisplay() {
+//        DisplayManager displayManager = (DisplayManager) getSystemService(Context.DISPLAY_SERVICE);
+//        Display[] displays = displayManager.getDisplays();
+//        // print display info to debug
+//        for(Display display : displays)
+//            Log.d(TAG, display.toString());
+//
+//        if (displays.length < 2) {
+//            Log.e(TAG, "no secondary display");
+//            Toast.makeText(this, "no secondary display, do nothing  !!!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//        
+//        int layerStack = 0;
+//        long[] ids = DisplayControl.getPhysicalDisplayIds();
+//        for(long id : ids) {
+//            Log.d(TAG, "id = " + id);
+//        
+//            final IBinder displayToken = DisplayControl.getPhysicalDisplayToken(id);
+//            if (displayToken == null) {
+//                Log.e(TAG, "Display token is null.");
+//                continue;
+//            }
+//            
+//            SurfaceControl.Transaction t = new SurfaceControl.Transaction();
+//            t.setDisplayLayerStack(displayToken, layerStack++);
+//            t.apply();
+//            Log.e(TAG, "setDisplayLayerStack 1");
+//        }
+//    }
 
 }

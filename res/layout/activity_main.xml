@@ -28,14 +28,16 @@
 		android:layout_height="wrap_content"
         android:layout_gravity="center"
 		android:text="@string/btnSameDisplay"
-		android:textColor="#FF0000" />
+		android:textColor="#FF0000"
+        android:visibility="gone" />
 
 	<Button android:id="@+id/btnDifferentDisplay"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
         android:layout_gravity="center"
 		android:text="@string/btnDifferentDisplay"
-		android:textColor="#FF0000" />
+		android:textColor="#FF0000"
+        android:visibility="gone" />
 
 
 </LinearLayout>
